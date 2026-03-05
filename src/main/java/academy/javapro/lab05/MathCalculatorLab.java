@@ -15,40 +15,70 @@ public class MathCalculatorLab {
         }
     }
 
-    // TODO 1: Implement this method
-    // Creates a Runnable that calculates the nth Fibonacci number
-    // Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...
-    // Formula: fib(n) = fib(n-1) + fib(n-2)
-    // Base cases: fib(0) = 0, fib(1) = 1
-    //
-    // The Runnable should:
-    // 1. Print: "Thread-X computing: fib(n)"
-    // 2. Calculate Fibonacci iteratively using two variables (prev, curr)
-    // 3. Include Thread.sleep(5) in the loop to simulate work
-    // 4. Store result in calc.result
-    // 5. Print: "Thread-X completed: fibonacci(n) = result"
-    //
-    // Example: fibonacci(8) = 21
-    public static Runnable fibonacciCalculator(CalculatorBase calc) {
-        // TODO: Return a Runnable (use lambda or anonymous class)
-        return null; // Replace this
+    
+    public static Runnable fibonacciCalculator(CalculatorBase calc){
+        Runnable thread = new Runnable() {
+            @Override
+            public void run(){
+                System.out.println(Thread.currentThread().getName() + " computing fib(" + calc.n + ")");
+                System.out.print("Fibonacci sequence: ");
+                calc.result = fib(calc.n);
+                if(calc.result == 0) System.out.println(0);
+                //Prints out the sequence to give off the illusion of it working out the results (increment the sleep timer to see)
+                for(int i = 0; i <= calc.n; i++){
+                    if(i == 0){System.out.print(fib(i));}
+                    else if (i == calc.n){System.out.println(", " + fib(i) + "\n");}
+                    else{System.out.print(", " + fib(i));}
+
+                    try{
+                        Thread.sleep(5);
+                    }catch(InterruptedException e){}
+                }
+                System.out.println(Thread.currentThread().getName() + " completed: fibonacci(" + calc.n + ") = " + calc.result);
+            }
+            //Fibonacci recursion method
+            private int fib(int num){
+            if(num == 0) return 0;
+            if(num == 1) return 1;
+            return fib(num - 1) + fib(num -2);
+            }
+        };
+        
+        return thread; 
+        
     }
 
-    // TODO 2: Implement this method
-    // Creates a Runnable that calculates sum of squares from 1 to n
-    // Formula: 1² + 2² + 3² + ... + n²
-    //
-    // The Runnable should:
-    // 1. Print: "Thread-X computing: 1² + 2² + 3² + ... + n²"
-    // 2. Loop from 1 to n, adding i*i to result
-    // 3. Include Thread.sleep(5) in the loop to simulate work
-    // 4. Store result in calc.result
-    // 5. Print: "Thread-X completed: sumOfSquares(n) = result"
-    //
-    // Example: sumOfSquares(5) = 1 + 4 + 9 + 16 + 25 = 55
     public static Runnable sumOfSquaresCalculator(CalculatorBase calc) {
-        // TODO: Return a Runnable (use lambda or anonymous class)
-        return null; // Replace this
+        Runnable thread = new Runnable() {
+            @Override
+            public void run(){
+                System.out.print(Thread.currentThread().getName() + " computing: ");
+                // Use subscript '\u00B2' for exponent symbol notation of power 2
+                if(calc.n == 0) {System.out.print("0\u00B2");}
+                else{
+                    //No need to have sleep method here as the computation have yet to be printed
+                    for(int i = 1; i <= calc.n; i++){
+                        if(i == 1){System.out.print(i + "\u00B2");}
+                        else if (i == calc.n){System.out.println(" + " + i + "\u00B2\n");}
+                        else{System.out.print(" + " + i + "\u00B2");}
+                    }
+                    calc.result = sumOfSquares(calc.n);
+                }
+                System.out.println(Thread.currentThread().getName() + " completed: sumOfSquares(" + calc.n + ") = " + calc.result);
+            }
+
+
+            private int sumOfSquares(int num){
+                int product = 0;
+                for(int i = 1; i <= num; i++){
+                    product += i*i;
+                    try{Thread.sleep(5);}catch(InterruptedException e){}
+                }
+                return product;
+            }
+
+        };
+        return thread;
     }
 
     // Main method (PROVIDED - DO NOT MODIFY)
