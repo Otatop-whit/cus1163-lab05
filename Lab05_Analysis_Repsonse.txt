@@ -1,0 +1,16 @@
+Brandon Whitley
+Analysis Answer
+
+1. The difference between task.run() and new Thread(task).start() is that new Thread(task).start will make a new thread to run that task which will take the thread into its runnable state. task.run() will start the task and terminate it after it finished running.
+
+2. The reason why the threads finish in different orders each time is due to the concurrent execution of the two threads. They execute at the same time but there is no guaranteed order at which the run unless you implement other methods to make it so.
+
+3. If you do not call join() before accessing the result, you will end up with both threads running simultaneously and mixing up the organization of data. As its name suggests, concurrent execution executes both thread run methods at the same time.
+
+4. The thread execution interleaves due to the concurrent execution. Due to the join method it seems that the interleaving is not random. Without the joins, the program would interleave randomly.
+
+5. Specifically for this assignment, we use Thread.sleep() to simulate a delay in calculations. It's purely visual however, in other assignments, it may be used for precise timing of thread execution, perhaps a code needs to start a few seconds another starts to run or some CPU resources need to be allocated elsewhere before the thread finish running.
+
+6. When you create the runnable it takes the object and uses the value of it in the run instance. Since its void, its value will modify within the function. It access the same calculator base via a calculator base being made outside the thread methods being called. the calculator base values are constructed in a class, in which two of them are made: one for the Fibonacci and another for the sum of squares. If there was one calculator base variable, the answer would vary based on which method is executed first.
+
+7. You can use a lambda expression rather than an anonymous class however, I personally use an anonymous class since I am more familiar with the anonymous class structure. It is easier for me to make an anonymous class as I can create methods within there for a more clearer representation.
